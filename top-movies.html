@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top Movies - Criticband</title>
+    <style>
+        body {
+            background-color: #161f25;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background: rgb(31, 31, 31);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .logo img {
+            width: 40px;
+            margin-right: 10px;
+        }
+
+        .logo h1 {
+            font-size: 22px;
+            margin: 0;
+            transition: color 0.3s;
+        }
+
+        .logo:hover h1 {
+            color: #f39c12;
+        }
+
+        .movies-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .movie-card {
+            background: #222;
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .movie-card img {
+            width: 100%;
+            border-radius: 8px;
+            height: 300px;
+            object-fit: cover;
+        }
+
+        .movie-card h3 {
+            font-size: 16px;
+            margin: 10px 0;
+            color: #f39c12;
+        }
+
+        .movie-card p {
+            font-size: 14px;
+            opacity: 0.8;
+            margin: 5px 0;
+        }
+
+        .movie-card:hover {
+            transform: scale(1.05);
+        }
+        .burger {
+            display: none;
+            cursor: pointer;
+            font-size: 25px;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                width: 100%;
+                background: rgb(31, 31, 31);
+                padding: 10px 0;
+            }
+
+            .nav-links li {
+                text-align: center;
+                margin: 10px 0;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .burger {
+                display: block;
+            }
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .logo img {
+            width: 40px;
+            margin-right: 10px;
+            transition: transform 0.3s;
+        }
+
+        .logo h1 {
+            font-size: 22px;
+            margin: 0;
+            transition: color 0.3s;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo:hover h1 {
+            color: #f39c12;
+        }
+
+        .nav-links {
+            list-style: none;
+            padding: 0;
+            display: flex;
+        }
+
+        .nav-links li {
+            margin: 0 15px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
+            font-size: 17px;
+            color: #f39c12;
+        }
+
+        .s a {
+            text-decoration: none;
+            color: white;
+            font-size: 16px;
+            padding: 8px 15px;
+            border-radius: 5px;
+            background: #2c3e50;
+            transition: all 0.3s ease;
+        }
+
+        .s a:hover {
+            background: #f39c12;
+            color: black;
+            font-size: 17px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <img src="logo.png" alt="Criticband Logo">
+            <h1>Criticband</h1>
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="reviews.html">Reviews</a></li>
+                <li><a href="movie.html">Movies</a></li>
+                <li><a href="top-movies.html">Top Movies</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="about.html">About us</a></li>
+            </ul>
+        </nav>
+        <div>
+            <li class="s" style="list-style: none;"><a href="signup.html" id="userDisplay">Sign up</a></li>
+        </div>
+        <div class="burger" onclick="toggleMenu()">☰</div>
+    </header>
+
+<!-- Movies Grid -->
+<div class="movies-container" id="moviesContainer">
+    <h2 style="text-align: center;">Loading Top Movies...</h2>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        console.log("Page loaded successfully!");
+        fetchTopMovies(); 
+    });
+
+    const apiKey = "f453e329";  
+
+    function fetchTopMovies() {
+        const moviesContainer = document.getElementById("moviesContainer");
+
+        const topMovies = [
+            "tt0111161", // The Shawshank Redemption
+            "tt0068646", // The Godfather
+            "tt0071562", // The Godfather: Part II
+            "tt0468569", // The Dark Knight
+            "tt0050083", // 12 Angry Men
+            "tt0108052", // Schindler's List
+            "tt0167260", // The Lord of the Rings: The Return of the King
+            "tt0110912", // Pulp Fiction
+            "tt0120737", // The Lord of the Rings: The Fellowship of the Ring
+            "tt0060196"  // The Good, the Bad and the Ugly
+        ];
+
+        moviesContainer.innerHTML = "";
+
+        topMovies.forEach(movieId => {
+            fetch(`https://www.omdbapi.com/?i=${movieId}&apikey=${apiKey}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.Response === "True") {
+                        const movieCard = document.createElement("div");
+                        movieCard.classList.add("movie-card");
+                        movieCard.innerHTML = `
+                            <img src="${data.Poster !== "N/A" ? data.Poster : "placeholder.jpg"}" alt="${data.Title}">
+                            <h3 class="clickable-title">${data.Title}</h3>
+                            <p><strong>⭐ IMDb Rating:</strong> ${data.imdbRating} (${data.imdbVotes} votes)</p>
+                            <p><strong>Year:</strong> ${data.Year}</p>
+                            <p><strong>Director:</strong> ${data.Director}</p>
+                        `;
+
+                        movieCard.addEventListener("click", function () {
+                            saveMovie(data);
+                            window.location.href = "movie.html"; 
+                        });
+
+                        moviesContainer.appendChild(movieCard);
+                    } else {
+                        console.error("Movie not found:", movieId);
+                    }
+                })
+                .catch(error => {
+                    console.error("Error fetching movie:", error);
+                });
+        });
+    }
+
+    function saveMovie(movie) {
+        let savedMovies = JSON.parse(localStorage.getItem("savedMovies")) || [];
+        
+        if (!savedMovies.some(m => m.imdbID === movie.imdbID)) {
+            savedMovies.push(movie);
+            localStorage.setItem("savedMovies", JSON.stringify(savedMovies));
+        }
+    }
+</script>
+
+</body>
+</html>

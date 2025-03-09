@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Reviews - Criticband</title>
+    <style>
+ body {
+            background-color: #161f25;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background: rgb(31, 31, 31);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .logo img {
+            width: 40px;
+            margin-right: 10px;
+            transition: transform 0.3s;
+        }
+
+        .logo h1 {
+            font-size: 22px;
+            margin: 0;
+            transition: color 0.3s;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo:hover h1 {
+            color: #f39c12;
+        }
+
+        .nav-links {
+            list-style: none;
+            padding: 0;
+            display: flex;
+        }
+
+        .nav-links li {
+            margin: 0 15px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
+            font-size: 17px;
+            color: #f39c12;
+        }
+
+        .s a {
+            text-decoration: none;
+            color: white;
+            font-size: 16px;
+            padding: 8px 15px;
+            border-radius: 5px;
+            background: #2c3e50;
+            transition: all 0.3s ease;
+        }
+
+        .s a:hover {
+            background: #f39c12;
+            color: black;
+            font-size: 17px;
+        }
+
+        /* Burger Menu */
+        .burger {
+            display: none;
+            cursor: pointer;
+            font-size: 25px;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                width: 100%;
+                background: rgb(31, 31, 31);
+                padding: 10px 0;
+            }
+
+            .nav-links li {
+                text-align: center;
+                margin: 10px 0;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .burger {
+                display: block;
+            }
+        }
+
+.container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+}
+
+h2 {
+    text-align: center;
+}
+
+.review-form {
+    background: #1e1e1e;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.review-form input, .review-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: none;
+    border-radius: 5px;
+    background: #2c3e50;
+    color: white;
+}
+
+.review-form button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background: #f39c12;
+    color: black;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.review-form button:hover {
+    background: #d35400;
+}
+
+.review-list {
+    margin-top: 20px;
+}
+
+.review {
+    background: #1e1e1e;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
+}
+
+.review h3 {
+    margin: 0;
+    color: #f39c12;
+}
+
+.review p {
+    margin: 5px 0 0;
+}
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="logo.png" alt="Criticband Logo">
+                <h1>Criticband</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="reviews.html">Reviews</a></li>
+                <li><a href="movie.html">Movies</a></li>
+                <li><a href="top-movies.html">Top Movies</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="about.html">About us</a></li>
+            </ul>
+        </nav>
+        <div class="burger" onclick="toggleMenu()">☰</div>
+    </header>
+
+    <div class="container">
+        <h2>Movie Reviews</h2>
+
+        <div class="review-form">
+            <h3>Add Your Review</h3>
+            <input type="text" id="movieTitle" placeholder="Movie Title">
+            <textarea id="reviewText" rows="4" placeholder="Write your review..."></textarea>
+            <button onclick="addReview()">Submit Review</button>
+        </div>
+
+        <div class="review-list" id="reviewList">
+            <h3>Latest Reviews</h3>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+        console.log("Page loaded successfully!");
+
+        const username = localStorage.getItem("username");
+        if (username) {
+            document.getElementById("userDisplay").innerHTML = `<span class="user-info">👤 ${username}</span>`;
+        }
+
+        fetchMovies();
+    });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            loadReviews();
+        });
+
+        function loadReviews() {
+            let reviews = JSON.parse(localStorage.getItem("reviews")) || [];
+            const reviewList = document.getElementById("reviewList");
+            reviewList.innerHTML = "<h3>Latest Reviews</h3>";
+
+            if (reviews.length === 0) {
+                reviewList.innerHTML += "<p>No reviews yet. Be the first to review!</p>";
+            } else {
+                reviews.forEach(review => {
+                    const reviewElement = document.createElement("div");
+                    reviewElement.classList.add("review");
+                    reviewElement.innerHTML = `
+                        <h3>${review.movie}</h3>
+                        <p>${review.text}</p>
+                    `;
+                    reviewList.appendChild(reviewElement);
+                });
+            }
+        }
+
+        function addReview() {
+            const movieTitle = document.getElementById("movieTitle").value.trim();
+            const reviewText = document.getElementById("reviewText").value.trim();
+
+            if (movieTitle === "" || reviewText === "") {
+                alert("Please fill in both fields.");
+                return;
+            }
+
+            let reviews = JSON.parse(localStorage.getItem("reviews")) || [];
+            reviews.push({ movie: movieTitle, text: reviewText });
+            localStorage.setItem("reviews", JSON.stringify(reviews));
+
+            document.getElementById("movieTitle").value = "";
+            document.getElementById("reviewText").value = "";
+            loadReviews();
+        }
+    </script>
+</body>
+</html>

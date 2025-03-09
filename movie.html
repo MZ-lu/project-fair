@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Details - Criticband</title>
+    <style>
+        body {
+            background-color: #161f25;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background: rgb(31, 31, 31);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .logo img {
+            width: 40px;
+            margin-right: 10px;
+        }
+
+        .logo h1 {
+            font-size: 22px;
+            margin: 0;
+            transition: color 0.3s;
+        }
+
+        .logo:hover h1 {
+            color: #f39c12;
+        }
+
+        .back-button {
+            text-decoration: none;
+            color: white;
+            font-size: 16px;
+            padding: 8px 15px;
+            border-radius: 5px;
+            background: #2c3e50;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: #f39c12;
+            color: black;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
+            text-align: center;
+        }
+
+        .movie-poster {
+            width: 100%;
+            max-width: 350px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
+        }
+
+        .movie-title {
+            font-size: 26px;
+            margin-top: 15px;
+            color: #f39c12;
+        }
+
+        .movie-details {
+            font-size: 16px;
+            margin-top: 10px;
+            opacity: 0.9;
+        }
+
+        .rating {
+            font-size: 18px;
+            color: #ffcc00;
+            margin-top: 10px;
+        }
+
+        .trailer-button {
+            display: inline-block;
+            background-color: #f39c12;
+            color: black;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .trailer-button:hover {
+            background-color: #ffdb58;
+            font-size: 17px;
+        }
+        .burger {
+            display: none;
+            cursor: pointer;
+            font-size: 25px;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                width: 100%;
+                background: rgb(31, 31, 31);
+                padding: 10px 0;
+            }
+
+            .nav-links li {
+                text-align: center;
+                margin: 10px 0;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .burger {
+                display: block;
+            }
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .logo img {
+            width: 40px;
+            margin-right: 10px;
+            transition: transform 0.3s;
+        }
+
+        .logo h1 {
+            font-size: 22px;
+            margin: 0;
+            transition: color 0.3s;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo:hover h1 {
+            color: #f39c12;
+        }
+
+        .nav-links {
+            list-style: none;
+            padding: 0;
+            display: flex;
+        }
+
+        .nav-links li {
+            margin: 0 15px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
+            font-size: 17px;
+            color: #f39c12;
+        }
+
+        .s a {
+            text-decoration: none;
+            color: white;
+            font-size: 16px;
+            padding: 8px 15px;
+            border-radius: 5px;
+            background: #2c3e50;
+            transition: all 0.3s ease;
+        }
+
+        .s a:hover {
+            background: #f39c12;
+            color: black;
+            font-size: 17px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <img src="logo.png" alt="Criticband Logo">
+            <h1>Criticband</h1>
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="reviews.html">Reviews</a></li>
+                <li><a href="movie.html">Movies</a></li>
+                <li><a href="top-movies.html">Top Movies</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="about.html">About us</a></li>
+            </ul>
+        </nav>
+        <div>
+            <li class="s" style="list-style: none;"><a href="signup.html" id="userDisplay">Sign up</a></li>
+        </div>
+        <div class="burger" onclick="toggleMenu()">☰</div>
+    </header>
+
+    <div class="container" id="movieDetails">
+        <p>Loading movie details...</p>
+    </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        console.log("Movie details page loaded.");
+
+        const savedMovies = JSON.parse(localStorage.getItem("savedMovies")) || [];
+        if (savedMovies.length === 0) {
+            document.getElementById("movieDetails").innerHTML = "<p>No movie selected.</p>";
+            return;
+        }
+
+        const lastMovie = savedMovies[savedMovies.length - 1]; 
+        fetchMovieDetails(lastMovie.imdbID);
+    });
+
+    async function fetchMovieDetails(imdbID) {
+        const apiKey = "f453e329";  
+        try {
+            let response = await fetch(`https://www.omdbapi.com/?i=${imdbID}&plot=full&apikey=${apiKey}`);
+            if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+
+            let movie = await response.json();
+            displayMovieDetails(movie);
+        } catch (error) {
+            console.error("Error fetching movie details:", error);
+            document.getElementById("movieDetails").innerHTML = "<p>Error loading movie details.</p>";
+        }
+    }
+
+    function displayMovieDetails(movie) {
+        const container = document.getElementById("movieDetails");
+
+        const imdbRating = movie.imdbRating !== "N/A" ? `⭐ ${movie.imdbRating}/10` : "N/A";
+        const imdbVotes = movie.imdbVotes !== "N/A" ? `${movie.imdbVotes} votes` : "N/A";
+
+        const movieHTML = `
+            <img class="movie-poster" src="${movie.Poster !== "N/A" ? movie.Poster : "placeholder.jpg"}" alt="${movie.Title}">
+            <h2 class="movie-title">${movie.Title} (${movie.Year})</h2>
+            <p class="movie-details"><strong>Genre:</strong> ${movie.Genre}</p>
+            <p class="movie-details"><strong>Director:</strong> ${movie.Director}</p>
+            <p class="movie-details"><strong>Actors:</strong> ${movie.Actors}</p>
+            <p class="movie-details"><strong>Runtime:</strong> ${movie.Runtime}</p>
+            <p class="movie-details"><strong>Release Date:</strong> ${movie.Released}</p>
+            <p class="movie-details"><strong>Awards:</strong> ${movie.Awards}</p>
+            <p class="rating"><strong>IMDb Rating:</strong> ${imdbRating} <br> (${imdbVotes})</p>
+            <p class="movie-details"><strong>Plot:</strong> ${movie.Plot}</p>
+            <a class="trailer-button" href="https://www.youtube.com/results?search_query=${encodeURIComponent(movie.Title)}+trailer" target="_blank">🎬 Watch Trailer</a>
+        `;
+
+        container.innerHTML = movieHTML;
+    }
+</script>
+
+</body>
+</html>
